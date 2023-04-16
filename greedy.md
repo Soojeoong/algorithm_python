@@ -37,3 +37,74 @@ print(count)
 	- '큰 단위가 항상 작은 작은 단위의 배수 형태이므로, 이렇게 하면 항상 최적의 해를 보장할 수 있겠구나!'
 
 ### [백준](https://www.acmicpc.net/problem/11047)
+---
+
+## 큰 수의 법칙 문제
+ 다양한 수로 이루어진 배열이 있을 때 주어진 수들을 M번 더하여 가장 큰 수를 만드는 법칙(단, 배열의 특정한 인덱스(번호)에 해당하는 수가 연속해서 K번을 초과하여 더해질 수 없음)
+
+- 가장 큰 수와 두 번째로 큰 수만 저장하면 됨
+- 가장 큰 수 K번 더하고 두 번째로 큰 수를 한 번 더하는 연산 반복
+
+```python
+# 배열의 크기 N
+# 숫자가 더해지는 횟수 M
+# 연속해서 같은 인덱스를 K번 초과해서 더할 수 없음
+# K <= M
+
+from sys import stdin
+
+input = stdin.readline
+
+N, M, K = map(int, input().split())
+arr = list(map(int, input().split()))
+arr.sort(reverse=True) #내림차순 정렬
+
+first = arr[0]
+second = arr[1]
+
+result = 0
+while True:
+    for i in range(K):
+        if M == 0:
+            break
+        result += first
+        M -= 1
+    if M == 0:
+        break
+    result += second
+    M -= 1
+print(result)
+```
+
+- M이 100억 이상이라면? (시간 초과되지 않기 위해)
+	- 반복되는 수열 이용
+ 	- 가장 큰 수가 더해지는 횟수 : ```int(M/(K+1))*K  +  M%(K+1)```
+
+```python
+# 배열의 크기 N
+# 숫자가 더해지는 횟수 M
+# 연속해서 같은 인덱스를 K번 초과해서 더할 수 없음
+# K <= M
+
+from sys import stdin
+
+input = stdin.readline
+
+N, M, K = map(int, input().split())
+arr = list(map(int, input().split()))
+arr.sort(reverse=True) #내림차순 정렬
+
+first = arr[0]
+second = arr[1]
+
+# 가장 큰 수가 더해지는 횟수
+count = int(M/(K+1)) * K + M % (K+1)
+
+result = 0
+# 가장 큰 수 더하기
+result += first * count
+# 두번째로 큰 수 더하기
+result += second * (M-count)
+
+print(result)
+```
