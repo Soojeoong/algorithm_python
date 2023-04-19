@@ -108,3 +108,88 @@ result += second * (M-count)
 
 print(result)
 ```
+
+---
+
+## 숫자 카드 게임 문제
+여러 개의 숫자 카드 중에서 가장 높은 숫자가 쓰인 카드 한 장 뽑기
+```
+1. 숫자가 쓰인 카드들이 N x M 형태로 있음 
+- N : 행의 개수
+- M : 열의 개수
+2. 먼저 뽑고자 하는 카드가 포함되어 있는 행 선택
+3. 그다음 선택된 행에 포함된 카드들 중 가장 숫자가 낮은 카드를 뽑기
+4. 따라서 처음에 카드를 골라낼 행을 선택할 때, 이후에 해당 행에서 가장 숫자가 낮은 카드를 뽑을 것을 고려하여 최종적으로 가장 높은 숫자의 카드를 뽑을 수 있도록 !
+```
+
+#### 아이디어
+1. NxM 행렬을 반복문을 통해 행별로 리스트로 입력받기
+2. 행별로 가장 작은 숫자 리스트에 담기
+3. 그 리스트에서 가장 큰 숫자가 있는 인덱스(=행) 선택!
+
+-> 각 행마다 가장 작은 수를 찾은 뒤에 그 수 중에서 가장 큰 수 찾기
+
+```python
+# NxM 입력 (1 <= N, M <= 100)
+# N개의 줄에 걸쳐 자연수(1 이상 10000 이하) 입력받기
+# 룰에 맞는 숫자 출력
+
+from sys import stdin
+input = stdin.readline
+
+N, M = map(int, input().split())
+
+result = 0
+for _ in range(N):
+    data = list(map(int, input().split()))
+    # 각 행마다 가장 작은 수 찾기
+    min_value = min(data)
+    # 그 중 가장 큰 수 찾기
+    result = max(result, min_value)
+
+print(max_row)
+```
+
+### '1이 될 때까지' 문제
+어떠한 수 N이 1이 될 때까지 다음 두 과정 중 하나를 반복적으로 선택해 수행하기
+단, 두 번째 연산은 N이 K로 나누어떨어질 때만 선택
+
+1. N에서 1을 뺀다
+2. N을 K로 나눈다
+
+#### 아이디어
+- N이 K로 나누어 떨어지면 2번 연산
+- 아니면 1번 연산
+- N이 1이 되면 반복문 탈출
+
+-> 최대한 많이 나누기
+
+#### My code
+```python
+# N, K 입력 (N >= K)
+# 연산의 최소 횟수 출력
+
+from sys import stdin
+input = stdin.readline
+
+N, K = map(int, input().split())
+
+count = 0
+while True:
+    if N == 1:
+        break
+
+    if N % K == 0:
+        N /= K
+    else:
+        N -= 1
+    count += 1
+
+print(count)
+```
+-> 입력값이 커지면 시간이 오바됨
+
+#### Clean code
+```python
+
+```
