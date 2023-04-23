@@ -191,5 +191,27 @@ print(count)
 
 #### Clean code
 ```python
+# N, K 입력 (N >= K)
+# 연산의 최소 횟수 출력
+
+from sys import stdin
+input = stdin.readline
+
+N, K = map(int, input().split())
+
+result = 0
+while True:
+    # (N==K로 나누어떨어지는 수)가 될 때까지 1씩 빼기
+    target = (N//K) * K   # target: 나눌 수 있는 가장 큰 수
+    result += (N - target)
+    N = target
+    # N이 k보다 작을 때(더 이상 나눌 수 없을 때) 반복문 탈출
+    if N < K:
+        break
+    result += 1
+    N //= K
+
+result += (N-1)
+print(result)
 
 ```
